@@ -53,7 +53,7 @@ public class Encrypt_Decrypt {
 		Cipher aesCipher;
 		try {
 			aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			byte[] iv = {0};
+			byte[] iv = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 			IvParameterSpec ivspec = new IvParameterSpec(iv);
 			aesCipher.init(Cipher.DECRYPT_MODE, K, ivspec);
 			// decrypt file
