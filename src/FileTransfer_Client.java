@@ -46,6 +46,7 @@ public class FileTransfer_Client {
 			byte[] salt = new String("12345678").getBytes();
 			KeySpec spec = new PBEKeySpec(password.toCharArray(),salt,1024,128);
 			SecretKey K = factory.generateSecret(spec);
+			K = new SecretKeySpec(K.getEncoded(),"AES");
 			
 			// encrypt file
 			byte[] encryptedFile = Encrypt_Decrypt.aes_encrypt(filepath,K);
