@@ -15,8 +15,11 @@ import java.security.spec.InvalidKeySpecException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
 
 public class FileTransfer {
+	public static byte[] iv = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	public static IvParameterSpec ivspec = new IvParameterSpec(iv);
 	
 	public static void main(String[] args) {
 		String mode = args[0];

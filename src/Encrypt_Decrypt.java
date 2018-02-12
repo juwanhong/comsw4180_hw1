@@ -24,12 +24,13 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Encrypt_Decrypt {
 
+
 	public static byte[] aes_encrypt(String filepath, SecretKey K) {
 		// instantiate cipher
 		Cipher aesCipher;
 		try {
 			aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			aesCipher.init(Cipher.ENCRYPT_MODE,K);
+			aesCipher.init(Cipher.ENCRYPT_MODE,K, FileTransfer.ivspec);
 			// convert file to byte[]
 			Path path = Paths.get(filepath);
 			byte[] file = Files.readAllBytes(path);
@@ -39,7 +40,7 @@ public class Encrypt_Decrypt {
 			
 			return encryptedFile;
 			
-		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException e) {
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
@@ -53,9 +54,7 @@ public class Encrypt_Decrypt {
 		Cipher aesCipher;
 		try {
 			aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			byte[] iv = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-			IvParameterSpec ivspec = new IvParameterSpec(iv);
-			aesCipher.init(Cipher.DECRYPT_MODE, K, ivspec);
+			aesCipher.init(Cipher.DECRYPT_MODE, K, FileTransfer.ivspec);
 			// decrypt file
 			byte[] decryptedFile = aesCipher.doFinal(encryptedFile);
 			// save file
