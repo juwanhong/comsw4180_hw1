@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 import javax.crypto.BadPaddingException;
@@ -68,7 +69,7 @@ public class Encrypt_Decrypt {
 		// get private key from keypath
 		Path path = Paths.get(keypath);
 		byte[] privateKeyBytes = Files.readAllBytes(path);
-		X509EncodedKeySpec ks = new X509EncodedKeySpec(privateKeyBytes);
+		PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(privateKeyBytes);
 		KeyFactory kf = KeyFactory.getInstance("RSA");
 		PrivateKey privateKey = kf.generatePrivate(ks);
 		// Initialize cipher
