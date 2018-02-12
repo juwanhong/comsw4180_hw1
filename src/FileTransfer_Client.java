@@ -1,5 +1,7 @@
 
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -33,8 +35,8 @@ public class FileTransfer_Client {
 		
 		// Open socket to server and input/output streams
 		Socket clientSocket = new Socket(serverIP, serverPort);
-		ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
-		ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
+		DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
+		DataInputStream in = new DataInputStream(clientSocket.getInputStream());
 				
 		switch (action) {
 		case "a": 
@@ -50,9 +52,10 @@ public class FileTransfer_Client {
 			byte[] encryptedK = Encrypt_Decrypt.rsa_encrypt("../server/key.pub", K);
 			
 			// send encrypted K and then encrypted file
+			out.writeInt(encryptedK.length);
 			out.write(encryptedK);
+			out.writeInt(encryptedFile.length);
 			out.write(encryptedFile);			
-			
 			
 		case "b":
 			
