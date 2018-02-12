@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -37,10 +38,12 @@ public class Encrypt_Decrypt {
 		return encryptedFile;
 	}
 	
-	public static void aes_decrypt(byte[] encryptedFile, SecretKey K, String filepath) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, IOException, NoSuchAlgorithmException, NoSuchPaddingException {
+	public static void aes_decrypt(byte[] encryptedFile, SecretKey K, String filepath) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException {
 		// instantiate cipher
 		Cipher aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-		aesCipher.init(Cipher.DECRYPT_MODE, K);
+		byte[] iv = {0};
+		IvParameterSpec ivspec = new IvParameterSpec(iv);
+		aesCipher.init(Cipher.DECRYPT_MODE, K, ivspec);
 		// decrypt file
 		byte[] decryptedFile = aesCipher.doFinal(encryptedFile);
 		// save file
