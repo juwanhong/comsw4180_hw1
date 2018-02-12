@@ -10,6 +10,8 @@ import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Signature;
+import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -116,6 +118,60 @@ public class Encrypt_Decrypt {
 			e.printStackTrace();
 			return null;
 		}
+		
+	}
+	
+	public static byte[] sign(String filepath, String keypath) {
+		
+		try {
+			// convert file to byte[]
+			Path filePath = Paths.get(filepath);
+			byte[] file = Files.readAllBytes(filePath);
+			// get private key from keypath
+			Path keyPath = Paths.get(keypath);
+			byte[] privateKeyBytes = Files.readAllBytes(keyPath);
+			PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(privateKeyBytes);
+			KeyFactory kf = KeyFactory.getInstance("RSA");
+			PrivateKey privateKey = kf.generatePrivate(ks);
+			
+			// Sign
+			Signature privateSignature = Signature.getInstance("SHA256withRSA");
+			privateSignature.initSign(privateKey);
+			privateSignature.update(file);
+			byte[] signature = privateSignature.sign();
+			
+			return signature;
+			
+		} catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException | InvalidKeyException | SignatureException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static boolean verify(byte[] file, byte[] signature, String keypath) {
+		boolean verified = false;
+		try {
+			// get private key from keypath
+			Path keyPath = Paths.get(keypath);
+			byte[] publicKeyBytes;
+			publicKeyBytes = Files.readAllBytes(keyPath);
+			X509EncodedKeySpec ks = new X509EncodedKeySpec(publicKeyBytes);
+			KeyFactory kf = KeyFactory.getInstance("RSA");
+			PublicKey publicKey = kf.generatePublic(ks);
+			// verify with public key
+			Signature publicSignature = Signature.getInstance("SHA256withRSA");
+			publicSignature.initVerify(publicKey);
+			publicSignature.update(file);
+			verified = publicSignature.verify(signature);
+			
+			
+		} catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException | InvalidKeyException | SignatureException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return verified;
 		
 	}
 }
