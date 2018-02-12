@@ -7,9 +7,11 @@ import java.net.Socket;
 
 public class FileTransfer_Thread extends Thread{
 	protected Socket threadSocket;
+	protected String[] serverArgs;
 	
 	public FileTransfer_Thread(Socket serverSocket, String[] serverArgs) {
 		this.threadSocket = serverSocket;
+		this.serverArgs = serverArgs;
 	}
 	
 	public void run() {
