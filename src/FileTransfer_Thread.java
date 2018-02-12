@@ -47,7 +47,7 @@ public class FileTransfer_Thread extends Thread{
 			Encrypt_Decrypt.aes_decrypt(encryptedFile, K, path + "/server/file");
 		}
 		
-		catch (IOException | InvalidKeyException | NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException e) {
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

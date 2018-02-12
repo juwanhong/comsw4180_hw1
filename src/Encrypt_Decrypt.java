@@ -24,63 +24,99 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Encrypt_Decrypt {
 
-	public static byte[] aes_encrypt(String filepath, SecretKey K) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException, IllegalBlockSizeException, BadPaddingException {
+	public static byte[] aes_encrypt(String filepath, SecretKey K) {
 		// instantiate cipher
-		Cipher aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-		aesCipher.init(Cipher.ENCRYPT_MODE,K);
-		// convert file to byte[]
-		Path path = Paths.get(filepath);
-		byte[] file = Files.readAllBytes(path);
+		Cipher aesCipher;
+		try {
+			aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			aesCipher.init(Cipher.ENCRYPT_MODE,K);
+			// convert file to byte[]
+			Path path = Paths.get(filepath);
+			byte[] file = Files.readAllBytes(path);
+			
+			//encrypt file
+			byte[] encryptedFile = aesCipher.doFinal(file);
+			
+			return encryptedFile;
+			
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 		
-		//encrypt file
-		byte[] encryptedFile = aesCipher.doFinal(file);
-	
-		return encryptedFile;
-	}
-	
-	public static void aes_decrypt(byte[] encryptedFile, SecretKey K, String filepath) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException {
-		// instantiate cipher
-		Cipher aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-		byte[] iv = {0};
-		IvParameterSpec ivspec = new IvParameterSpec(iv);
-		aesCipher.init(Cipher.DECRYPT_MODE, K, ivspec);
-		// decrypt file
-		byte[] decryptedFile = aesCipher.doFinal(encryptedFile);
-		// save file
-		Path path = Paths.get(filepath);
-		Files.write(path,decryptedFile);
 		
 	}
 	
-	public static byte[] rsa_encrypt(String keypath, SecretKey K) throws InvalidKeyException, IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException {
+	public static void aes_decrypt(byte[] encryptedFile, SecretKey K, String filepath) {
+		// instantiate cipher
+		Cipher aesCipher;
+		try {
+			aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			byte[] iv = {0};
+			IvParameterSpec ivspec = new IvParameterSpec(iv);
+			aesCipher.init(Cipher.DECRYPT_MODE, K, ivspec);
+			// decrypt file
+			byte[] decryptedFile = aesCipher.doFinal(encryptedFile);
+			// save file
+			Path path = Paths.get(filepath);
+			Files.write(path,decryptedFile);
+			
+		}  catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	public static byte[] rsa_encrypt(String keypath, SecretKey K) {
 		// get public key from keypath
 		Path path = Paths.get(keypath);
-		byte[] publicKeyBytes = Files.readAllBytes(path);
-		X509EncodedKeySpec ks = new X509EncodedKeySpec(publicKeyBytes);
-		KeyFactory kf = KeyFactory.getInstance("RSA");
-		PublicKey publicKey = kf.generatePublic(ks);
-		// Initialize cipher
-		Cipher rsaCipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-		rsaCipher.init(Cipher.ENCRYPT_MODE,publicKey);
-		// encrypt
-		byte[] encryptedK = rsaCipher.doFinal(K.getEncoded());
+		byte[] publicKeyBytes;
+		try {
+			publicKeyBytes = Files.readAllBytes(path);
+			X509EncodedKeySpec ks = new X509EncodedKeySpec(publicKeyBytes);
+			KeyFactory kf = KeyFactory.getInstance("RSA");
+			PublicKey publicKey = kf.generatePublic(ks);
+			// Initialize cipher
+			Cipher rsaCipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+			rsaCipher.init(Cipher.ENCRYPT_MODE,publicKey);
+			// encrypt
+			byte[] encryptedK = rsaCipher.doFinal(K.getEncoded());
+			
+			return encryptedK;
+			
+		}  catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException | InvalidKeySpecException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 		
-		return encryptedK;
 	}
 	
-	public static SecretKey rsa_decrypt(byte[] encryptedK, String keypath) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+	public static SecretKey rsa_decrypt(byte[] encryptedK, String keypath) {
 		// get private key from keypath
 		Path path = Paths.get(keypath);
-		byte[] privateKeyBytes = Files.readAllBytes(path);
-		PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(privateKeyBytes);
-		KeyFactory kf = KeyFactory.getInstance("RSA");
-		PrivateKey privateKey = kf.generatePrivate(ks);
-		// Initialize cipher
-		Cipher rsaCipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-		rsaCipher.init(Cipher.DECRYPT_MODE,privateKey);
-		// encrypt
-		SecretKey K = new SecretKeySpec(rsaCipher.doFinal(encryptedK), "AES");
+		byte[] privateKeyBytes;
+		try {
+			privateKeyBytes = Files.readAllBytes(path);
+			PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(privateKeyBytes);
+			KeyFactory kf = KeyFactory.getInstance("RSA");
+			PrivateKey privateKey = kf.generatePrivate(ks);
+			// Initialize cipher
+			Cipher rsaCipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+			rsaCipher.init(Cipher.DECRYPT_MODE,privateKey);
+			// encrypt
+			SecretKey K = new SecretKeySpec(rsaCipher.doFinal(encryptedK), "AES");
+			
+			return K;
+			
+		}  catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException | InvalidKeySpecException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 		
-		return K;
 	}
 }
