@@ -43,7 +43,8 @@ public class FileTransfer_Client {
 			// use pw to generate 128-bit K, encrypt w/ AES (CBC) using K, 
 			// encrypt K with server's public key, send encrypted K and file
 			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-			KeySpec spec = new PBEKeySpec(password.toCharArray());
+			byte[] salt = new String("12345678").getBytes();
+			KeySpec spec = new PBEKeySpec(password.toCharArray(),salt,1024,128);
 			SecretKey K = factory.generateSecret(spec);
 			
 			// encrypt file
