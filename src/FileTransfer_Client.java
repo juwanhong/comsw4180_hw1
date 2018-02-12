@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -51,7 +53,9 @@ public class FileTransfer_Client {
 			// encrypt file
 			byte[] encryptedFile = Encrypt_Decrypt.aes_encrypt(filepath,K);
 			// encrypt K
-			byte[] encryptedK = Encrypt_Decrypt.rsa_encrypt("../server/key.pub", K);
+			Path curPath = Paths.get("");
+			String path = curPath.toAbsolutePath().toString();
+			byte[] encryptedK = Encrypt_Decrypt.rsa_encrypt(path + "/server/key.pub", K);
 			
 			// send encrypted K and then encrypted file
 			out.writeInt(encryptedK.length);
