@@ -17,14 +17,15 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class Encrypt_Decrypt {
 
 	public static byte[] aes_encrypt(String filepath, SecretKey K) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException, IllegalBlockSizeException, BadPaddingException {
 		// instantiate cipher
-		Cipher aesCipher = Cipher.getInstance("AES");
-		aesCipher.init(Cipher.ENCRYPT_MODE, K);
+		Cipher aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+		aesCipher.init(Cipher.ENCRYPT_MODE,K);
 		// convert file to byte[]
 		Path path = Paths.get(filepath);
 		byte[] file = Files.readAllBytes(path);
@@ -37,7 +38,7 @@ public class Encrypt_Decrypt {
 	
 	public static void aes_decrypt(byte[] encryptedFile, SecretKey K, String filepath) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, IOException, NoSuchAlgorithmException, NoSuchPaddingException {
 		// instantiate cipher
-		Cipher aesCipher = Cipher.getInstance("AES");
+		Cipher aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		aesCipher.init(Cipher.DECRYPT_MODE, K);
 		// decrypt file
 		byte[] decryptedFile = aesCipher.doFinal(encryptedFile);
