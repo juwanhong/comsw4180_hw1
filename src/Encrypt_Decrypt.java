@@ -56,7 +56,7 @@ public class Encrypt_Decrypt {
 		KeyFactory kf = KeyFactory.getInstance("RSA");
 		PublicKey publicKey = kf.generatePublic(ks);
 		// Initialize cipher
-		Cipher rsaCipher = Cipher.getInstance("RSA/ECB/PCK1Padding");
+		Cipher rsaCipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 		rsaCipher.init(Cipher.ENCRYPT_MODE,publicKey);
 		// encrypt
 		byte[] encryptedK = rsaCipher.doFinal(K.getEncoded());
@@ -72,7 +72,7 @@ public class Encrypt_Decrypt {
 		KeyFactory kf = KeyFactory.getInstance("RSA");
 		PrivateKey privateKey = kf.generatePrivate(ks);
 		// Initialize cipher
-		Cipher rsaCipher = Cipher.getInstance("RSA/ECB/PCK1Padding");
+		Cipher rsaCipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 		rsaCipher.init(Cipher.DECRYPT_MODE,privateKey);
 		// encrypt
 		SecretKey K = new SecretKeySpec(rsaCipher.doFinal(encryptedK), "AES");
