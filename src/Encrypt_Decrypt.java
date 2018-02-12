@@ -23,7 +23,7 @@ public class Encrypt_Decrypt {
 
 	public static byte[] aes_encrypt(String filepath, SecretKey K) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IOException, IllegalBlockSizeException, BadPaddingException {
 		// instantiate cipher
-		Cipher aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+		Cipher aesCipher = Cipher.getInstance("AES");
 		aesCipher.init(Cipher.ENCRYPT_MODE, K);
 		// convert file to byte[]
 		Path path = Paths.get(filepath);
@@ -37,7 +37,7 @@ public class Encrypt_Decrypt {
 	
 	public static void aes_decrypt(byte[] encryptedFile, SecretKey K, String filepath) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, IOException, NoSuchAlgorithmException, NoSuchPaddingException {
 		// instantiate cipher
-		Cipher aesCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+		Cipher aesCipher = Cipher.getInstance("AES");
 		aesCipher.init(Cipher.DECRYPT_MODE, K);
 		// decrypt file
 		byte[] decryptedFile = aesCipher.doFinal(encryptedFile);
