@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.InvalidKeyException;
@@ -32,14 +33,14 @@ public class FileTransfer_Client {
 		InetAddress serverIP = InetAddress.getByName(clientArgs[4]);
 		int serverPort = Integer.parseInt(clientArgs[5]);
 		
-		// server public key
-		
-		
 		// Open socket to server and input/output streams
 		Socket clientSocket = new Socket(serverIP, serverPort);
 		DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
 		DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-				
+		
+		Path curPath = Paths.get("");
+		String path = curPath.toAbsolutePath().toString();
+		
 		switch (action) {
 		case "a": 
 			// use pw to generate 128-bit K, encrypt w/ AES (CBC) using K, 
@@ -53,21 +54,55 @@ public class FileTransfer_Client {
 			// encrypt file
 			byte[] encryptedFile = Encrypt_Decrypt.aes_encrypt(filepath,K);
 			// encrypt K
-			Path curPath = Paths.get("");
-			String path = curPath.toAbsolutePath().toString();
 			byte[] encryptedK = Encrypt_Decrypt.rsa_encrypt(path + "/server/key.pub", K);
 			
 			// send encrypted K and then encrypted file
 			out.writeInt(encryptedK.length);
 			out.write(encryptedK);
 			out.writeInt(encryptedFile.length);
-			out.write(encryptedFile);			
+			out.write(encryptedFile);
+			
+			break;
 			
 		case "b":
+			// sign file using sha256 and rsa private key and send to server
+			byte[] signatureB = Encrypt_Decrypt.sign(filepath, path + "/client/key.key");
+			byte[] fileB = Files.readAllBytes(Paths.get(filepath));
+			// send file and then signature
+			out.writeInt(fileB.length);
+			out.write(fileB);
+			out.writeInt(signatureB.length);
+			out.write(signatureB);
 			
+			break;
 			
 		case "c":
+			// sign file using sha256 and rsa private key and send to server
+			byte[] signatureC = Encrypt_Decrypt.sign(filepath, path + "/client/key.key");
+			byte[] fileC = Files.readAllBytes(Paths.get(filepath));
+			if(fileC[0] == 0x00) {
+				fileC[0] = (byte) 0xFF;
+			}
+			else {
+				fileC[0] = (byte) 0x00;
+			}
+			
+			// send file and then signature
+			out.writeInt(fileC.length);
+			out.write(fileC);
+			out.writeInt(signatureC.length);
+			out.write(signatureC);
+			
+			break;
+			
+		default:
+			System.out.println("Valid modes are a, b, and c.");
+			break;
 		}
+		
+		in.close();
+		out.close();
+		clientSocket.close();
 	}
 
 }

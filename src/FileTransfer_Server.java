@@ -8,8 +8,6 @@ public class FileTransfer_Server {
 	
 	public static void Server(String[] serverArgs) {
 		int portNumber = Integer.parseInt(serverArgs[1]);
-		String mode = serverArgs[2];
-		String RSAFiles = serverArgs[3];
 		try {
 			// Create serverSocket
 			ServerSocket serverSocket = new ServerSocket(portNumber);
