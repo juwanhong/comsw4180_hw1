@@ -22,7 +22,7 @@ public class FileTransfer {
 	public static IvParameterSpec ivspec = new IvParameterSpec(iv);
 	
 	public static void main(String[] args) throws BadPaddingException {
-		if(args.length != 6 || args.length != 3) {
+		if(args.length != 6 && args.length != 3) {
 			System.out.println(args.length);
 			System.out.println("Input error!");
 			System.out.println("Input format should be:");
