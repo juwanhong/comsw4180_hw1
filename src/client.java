@@ -103,6 +103,7 @@ public class client {
 			}
 			
 			in.close();
+			out.flush();
 			out.close();
 			clientSocket.close();
 		

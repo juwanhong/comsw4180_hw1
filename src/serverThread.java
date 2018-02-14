@@ -82,6 +82,7 @@ public class serverThread extends Thread {
 				
 			}
 			
+			out.flush();
 			out.close();
 			in.close();
 			return;
