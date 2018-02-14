@@ -46,6 +46,8 @@ public class cipher {
 			// TODO Auto-generated catch block
 			System.out.println("Error occured during AES encryption.");
 			return null;
+		} catch (NullPointerException e) {
+			System.out.println("File not found.");
 		}
 		
 		
@@ -92,7 +94,10 @@ public class cipher {
 			// TODO Auto-generated catch block
 			System.out.println("Error occured during RSA encryption.");
 			return null;
+		} catch (NullPointerException e) {
+			System.out.println("File not found.");
 		}
+		
 		
 	}
 	
@@ -146,6 +151,8 @@ public class cipher {
 			// TODO Auto-generated catch block
 			System.out.println("Error occured during signature.");
 			return null;
+		} catch (NullPointerException e) {
+			System.out.println("File not found.");
 		}
 	}
 	
