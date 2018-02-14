@@ -54,6 +54,8 @@ public class FileTransfer {
 				System.out.println("	server: java FileTransfer -s [port] [mode:(d or v)]");
 			}
 			
+			break;
+			
 		case "-c": //client
 			if(args.length == 6 && args[1].length() == 16) {
 				client.Client(args);
@@ -63,9 +65,13 @@ public class FileTransfer {
 				System.out.println("	client: java FileTransfer -c [password:(16 char)] [file path] [mode:(a, b, or c)] [server ip] [port]");
 
 			}
+			
+			break;
 
 		default:
 			System.out.println("Use [-s] for server and [-c] for client");
+			
+			break;
 		}
 	}
 

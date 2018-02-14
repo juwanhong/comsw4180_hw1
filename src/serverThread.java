@@ -72,16 +72,17 @@ public class serverThread extends Thread {
 				
 				// print output
 				if(verified) {
-					System.out.println("Signature is valid.");
+					System.out.println(">>>> Signature is valid.");
 				}
 				else {
-					System.out.println("Signature is invalid.");
+					System.out.println(">>>> Signature is invalid.");
 				}
 				
 			}
 			
 			out.close();
 			in.close();
+			return;
 		}
 
 		catch (IOException e) {
