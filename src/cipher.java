@@ -48,6 +48,7 @@ public class cipher {
 			return null;
 		} catch (NullPointerException e) {
 			System.out.println("File not found.");
+			return null;
 		}
 		
 		
@@ -96,6 +97,7 @@ public class cipher {
 			return null;
 		} catch (NullPointerException e) {
 			System.out.println("File not found.");
+			return null;
 		}
 		
 		
@@ -153,6 +155,7 @@ public class cipher {
 			return null;
 		} catch (NullPointerException e) {
 			System.out.println("File not found.");
+			return null;
 		}
 	}
 	
