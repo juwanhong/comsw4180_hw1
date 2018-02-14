@@ -11,8 +11,9 @@ public class server {
 		try {
 			// Create serverSocket
 			ServerSocket serverSocket = new ServerSocket(portNumber);
+			System.out.println(">> Listening for client connection...");
+
 			while(true) {
-				System.out.println(">> Listening for client connection...");
 				// Listen for client connections
 				Socket clientSocket = serverSocket.accept();
 				// Start serverThread

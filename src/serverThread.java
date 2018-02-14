@@ -55,6 +55,8 @@ public class serverThread extends Thread {
 				Encrypt_Decrypt.aes_decrypt(encryptedFile, K, path + "/server/file");
 				
 				System.out.println(">>>> File recieved from client. File saved to: " + path + "/server/file");
+				System.out.println(">> Listening for client connection...");
+
 				
 				break;
 				
@@ -79,6 +81,8 @@ public class serverThread extends Thread {
 				else {
 					System.out.println(">>>> Signature is invalid.");
 				}
+				System.out.println(">> Listening for client connection...");
+
 				
 			}
 
