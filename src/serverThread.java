@@ -54,6 +54,8 @@ public class serverThread extends Thread {
 				// decrypt file with K (AES)
 				Encrypt_Decrypt.aes_decrypt(encryptedFile, K, path + "/server/file");
 				
+				System.out.println(">>>> File recieved from client. File saved to: " + path + "/server/file");
+				
 				break;
 				
 			case "v":
