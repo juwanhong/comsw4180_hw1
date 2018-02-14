@@ -54,7 +54,7 @@ public class serverThread extends Thread {
 				// decrypt file with K (AES)
 				Encrypt_Decrypt.aes_decrypt(encryptedFile, K, path + "/server/file");
 				
-				System.out.println(">>>> File recieved from client. File saved to: " + path + "/server/file");
+				System.out.print("\n>>>> File recieved from client. File saved to: " + path + "/server/file");
 				
 				break;
 				
@@ -74,10 +74,10 @@ public class serverThread extends Thread {
 				
 				// print output
 				if(verified) {
-					System.out.println(">>>> Signature is valid.");
+					System.out.print("\n>>>> Signature is valid.");
 				}
 				else {
-					System.out.println(">>>> Signature is invalid.");
+					System.out.print("\n>>>> Signature is invalid.");
 				}
 				
 			}
