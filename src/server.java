@@ -12,7 +12,7 @@ public class server {
 			// Create serverSocket
 			ServerSocket serverSocket = new ServerSocket(portNumber);
 			while(true) {
-				System.out.println(">> Listening for client connection...");
+				System.out.print(">> Listening for client connection...");
 				// Listen for client connections
 				Socket clientSocket = serverSocket.accept();
 				// Start serverThread
