@@ -19,7 +19,6 @@ public class server {
 				serverThread serverThread = new serverThread(clientSocket, serverArgs);
 				serverThread.start();
 				
-				clientSocket.close();
 			}
 			
 		}
