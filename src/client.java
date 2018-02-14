@@ -119,6 +119,8 @@ public class client {
 		} catch (InvalidKeySpecException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Key is not compatible. Please retry with new key.");
+		} catch (NumberFormatException e) {
+			System.out.println("Check ip address and port number!");
 		}
 	}	
 
