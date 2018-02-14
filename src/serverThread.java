@@ -49,10 +49,10 @@ public class serverThread extends Thread {
 				in.read(encryptedFile);
 				
 				// decrypt K with private key (RSA)
-				SecretKey K = Encrypt_Decrypt.rsa_decrypt(encryptedK, path + "/server/key.key");
+				SecretKey K = cipher.rsa_decrypt(encryptedK, path + "/server/key.key");
 				
 				// decrypt file with K (AES)
-				Encrypt_Decrypt.aes_decrypt(encryptedFile, K, path + "/server/file");
+				cipher.aes_decrypt(encryptedFile, K, path + "/server/file");
 				
 				System.out.println(">>>> File recieved from client. File saved to: " + path + "/server/file");
 				System.out.println(">> Listening for client connection...");
@@ -72,7 +72,7 @@ public class serverThread extends Thread {
 				in.read(signature);
 				
 				// verify signature
-				boolean verified = Encrypt_Decrypt.verify(file, signature, path + "/client/key.pub");
+				boolean verified = cipher.verify(file, signature, path + "/client/key.pub");
 				
 				// print output
 				if(verified) {

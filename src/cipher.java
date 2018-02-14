@@ -24,7 +24,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class Encrypt_Decrypt {
+public class cipher {
 
 
 	public static byte[] aes_encrypt(String filepath, SecretKey K) {

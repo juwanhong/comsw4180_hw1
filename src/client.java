@@ -54,9 +54,9 @@ public class client {
 				K = new SecretKeySpec(K.getEncoded(),"AES");
 				
 				// encrypt file
-				byte[] encryptedFile = Encrypt_Decrypt.aes_encrypt(filepath,K);
+				byte[] encryptedFile = cipher.aes_encrypt(filepath,K);
 				// encrypt K
-				byte[] encryptedK = Encrypt_Decrypt.rsa_encrypt(path + "/server/key.pub", K);
+				byte[] encryptedK = cipher.rsa_encrypt(path + "/server/key.pub", K);
 				
 				// send encrypted K and then encrypted file
 				out.writeInt(encryptedK.length);
@@ -68,7 +68,7 @@ public class client {
 				
 			case "b":
 				// sign file using sha256 and rsa private key and send to server
-				byte[] signatureB = Encrypt_Decrypt.sign(filepath, path + "/client/key.key");
+				byte[] signatureB = cipher.sign(filepath, path + "/client/key.key");
 				byte[] fileB = Files.readAllBytes(Paths.get(filepath));
 				// send file and then signature
 				out.writeInt(fileB.length);
@@ -80,7 +80,7 @@ public class client {
 				
 			case "c":
 				// sign file using sha256 and rsa private key and send to server
-				byte[] signatureC = Encrypt_Decrypt.sign(filepath, path + "/client/key.key");
+				byte[] signatureC = cipher.sign(filepath, path + "/client/key.key");
 				byte[] fileC = Files.readAllBytes(Paths.get(filepath));
 				if(fileC[0] == 0x00) {
 					fileC[0] = (byte) 0xFF;
