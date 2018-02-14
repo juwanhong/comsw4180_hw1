@@ -23,6 +23,7 @@ public class FileTransfer {
 	
 	public static void main(String[] args) throws BadPaddingException {
 		if(args.length != 6 || args.length != 3) {
+			System.out.println(args.length);
 			System.out.println("Input error!");
 			System.out.println("Input format should be:");
 			System.out.println("	server: java FileTransfer -s [port] [mode:(d or v)]");
