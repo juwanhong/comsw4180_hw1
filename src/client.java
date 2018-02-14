@@ -111,6 +111,7 @@ public class client {
 			System.out.println("Server could not be found at specified IP address. Retry with correct address.");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
 			System.out.println("Socket read has failed. Please retry.");
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block

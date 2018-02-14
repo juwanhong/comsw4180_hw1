@@ -86,6 +86,7 @@ public class serverThread extends Thread {
 
 		catch (IOException e) {
 			System.out.println("Failed to read socket input. Please retry.");
+			return;
 		}
 	}
 
