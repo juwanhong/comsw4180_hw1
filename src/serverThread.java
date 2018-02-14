@@ -16,12 +16,12 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
-public class FileTransfer_Thread extends Thread {
+public class serverThread extends Thread {
 
 	protected Socket threadSocket;
 	protected String[] serverArgs;
 
-	public FileTransfer_Thread(Socket serverSocket, String[] serverArgs) {
+	public serverThread(Socket serverSocket, String[] serverArgs) {
 		this.threadSocket = serverSocket;
 		this.serverArgs = serverArgs;
 	}
@@ -79,10 +79,13 @@ public class FileTransfer_Thread extends Thread {
 				}
 				
 			}
+			
+			out.close();
+			in.close();
 		}
 
 		catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Failed to read socket input. Please retry.");
 		}
 	}
 

@@ -21,10 +21,18 @@ public class FileTransfer {
 	public static byte[] iv = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	public static IvParameterSpec ivspec = new IvParameterSpec(iv);
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws BadPaddingException {
+		if(args.length != 6 || args.length != 3) {
+			System.out.println("Input error!");
+			System.out.println("Input format should be:");
+			System.out.println("	server: java FileTransfer -s [port] [mode:(d or v)]");
+			System.out.println("	client: java FileTransfer -c [password:(16 char)] [file path] [mode:(a, b, or c)] [server ip] [port]");
+			
+			return;
+		}
 		String mode = args[0];
 		
-		try {
+/*		try {
 			Path curPath = Paths.get("");
 			String path = curPath.toAbsolutePath().toString();
 			createRSAKeys(path + "/server/key");
@@ -32,20 +40,31 @@ public class FileTransfer {
 		} catch (NoSuchAlgorithmException | IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}*/
 		
 		switch (mode) {
 		case "-s": //server
-			FileTransfer_Server.Server(args);
+			if(args.length == 3) {
+				server.Server(args);
+			}
+			else {
+				System.out.println("Input error!");
+				System.out.println("Input format should be:");
+				System.out.println("	server: java FileTransfer -s [port] [mode:(d or v)]");
+			}
 			
 		case "-c": //client
-			try {
-				FileTransfer_Client.Client(args);
-			} catch (InvalidKeyException | InvalidKeySpecException | NoSuchAlgorithmException | NoSuchPaddingException
-					| IllegalBlockSizeException | BadPaddingException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(args.length == 6 && args[1].length() == 16) {
+				client.Client(args);
 			}
+			else {
+				System.out.println("Input format should be:");
+				System.out.println("	client: java FileTransfer -c [password:(16 char)] [file path] [mode:(a, b, or c)] [server ip] [port]");
+
+			}
+
+		default:
+			System.out.println("Use [-s] for server and [-c] for client");
 		}
 	}
 

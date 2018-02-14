@@ -44,7 +44,7 @@ public class Encrypt_Decrypt {
 			
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error occured during AES encryption.");
 			return null;
 		}
 		
@@ -65,7 +65,7 @@ public class Encrypt_Decrypt {
 			
 		}  catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error occured during AES decryption.");
 		}
 		
 		
@@ -90,7 +90,7 @@ public class Encrypt_Decrypt {
 			
 		}  catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException | InvalidKeySpecException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error occured during RSA encryption.");
 			return null;
 		}
 		
@@ -115,7 +115,7 @@ public class Encrypt_Decrypt {
 			
 		}  catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException | InvalidKeySpecException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error occured during RSA decryption.");
 			return null;
 		}
 		
@@ -144,7 +144,7 @@ public class Encrypt_Decrypt {
 			
 		} catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException | InvalidKeyException | SignatureException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error occured during signature.");
 			return null;
 		}
 	}
@@ -168,7 +168,7 @@ public class Encrypt_Decrypt {
 			
 		} catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException | InvalidKeyException | SignatureException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error occured during signature verification.");
 		}
 		
 		return verified;
