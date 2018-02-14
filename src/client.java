@@ -120,6 +120,8 @@ public class client {
 			System.out.println("Key is not compatible. Please retry with new key.");
 		} catch (NumberFormatException e) {
 			System.out.println("Check ip address and port number!");
+		} catch (NullPointerException e) {
+			System.out.println("File not found.");
 		}
 	}	
 
