@@ -22,10 +22,10 @@ public class FileTransfer {
 	public static IvParameterSpec ivspec = new IvParameterSpec(iv);
 	
 	public static void main(String[] args) throws BadPaddingException {
-		if(args.length != 6 && args.length != 3) {
-			System.out.println(args.length);
+		if(args.length != 6 && args.length != 3 && args.length != 1) {
 			System.out.println("Input error!");
 			System.out.println("Input format should be:");
+			System.out.println("	key generation: java FileTransfer -f");
 			System.out.println("	server: java FileTransfer -s [port] [mode:(d or v)]");
 			System.out.println("	client: java FileTransfer -c [password:(16 char)] [file path] [mode:(a, b, or c)] [server ip] [port]");
 			
@@ -33,15 +33,6 @@ public class FileTransfer {
 		}
 		String mode = args[0];
 		
-/*		try {
-			Path curPath = Paths.get("");
-			String path = curPath.toAbsolutePath().toString();
-			createRSAKeys(path + "/server/key");
-			createRSAKeys(path + "/client/key");
-		} catch (NoSuchAlgorithmException | IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
 		
 		switch (mode) {
 		case "-s": //server
@@ -64,6 +55,19 @@ public class FileTransfer {
 				System.out.println("Input format should be:");
 				System.out.println("	client: java FileTransfer -c [password:(16 char)] [file path] [mode:(a, b, or c)] [server ip] [port]");
 
+			}
+			
+			break;
+		
+		case "-k": //key generation
+			try {
+				Path curPath = Paths.get("");
+				String path = curPath.toAbsolutePath().toString();
+				createRSAKeys(path + "/server/key");
+				createRSAKeys(path + "/client/key");
+			} catch (NoSuchAlgorithmException | IOException e1) {
+				// TODO Auto-generated catch block
+				System.out.println("Key Generation Failed.");
 			}
 			
 			break;
